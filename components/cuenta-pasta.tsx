@@ -6,8 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, ip, Legend, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts'
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
 
 interface MonthlyData {
