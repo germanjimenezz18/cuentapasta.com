@@ -338,9 +338,9 @@ export default function MoneyTracker() {
                     <TableCell 
                       key={month} 
                       className={`text-right ${
-                        data[month].profit > 0 
+                        data[month].profit !== null && data[month].profit > 0 
                           ? 'text-green-600 dark:text-green-400' 
-                          : data[month].profit < 0 
+                          : data[month].profit !== null && data[month].profit < 0 
                             ? 'text-red-600 dark:text-red-400' 
                             : ''
                       }`}
