@@ -54,6 +54,20 @@ const initialData: Record<string, YearlyData> = {
     "OCTUBRE": { cash: null, banks: null, crypto: null, total: null, profit: null },
     "NOVIEMBRE": { cash: null, banks: null, crypto: null, total: null, profit: null },
     "DICIEMBRE": { cash: null, banks: null, crypto: null, total: null, profit: null }
+  },
+  "2025": {
+    "ENERO": { cash: null, banks: null, crypto: null, total: null, profit: null },
+    "FEBRERO": { cash: null, banks: null, crypto: null, total: null, profit: null },
+    "MARZO": { cash: null, banks: null, crypto: null, total: null, profit: null },
+    "ABRIL": { cash: null, banks: null, crypto: null, total: null, profit: null },
+    "MAYO": { cash: null, banks: null, crypto: null, total: null, profit: null },
+    "JUNIO": { cash: null, banks: null, crypto: null, total: null, profit: null },
+    "JULIO": { cash: null, banks: null, crypto: null, total: null, profit: null },
+    "AGOSTO": { cash: null, banks: null, crypto: null, total: null, profit: null },
+    "SEPTIEMBRE": { cash: null, banks: null, crypto: null, total: null, profit: null },
+    "OCTUBRE": { cash: null, banks: null, crypto: null, total: null, profit: null },
+    "NOVIEMBRE": { cash: null, banks: null, crypto: null, total: null, profit: null },
+    "DICIEMBRE": { cash: null, banks: null, crypto: null, total: null, profit: null }
   }
 }
 
@@ -65,6 +79,7 @@ export default function MoneyTracker() {
     }
     return initialData
   })
+
   const [selectedYear, setSelectedYear] = useState(() => {
     if (typeof window !== 'undefined') {
       return localStorage.getItem('selectedYear') || "2024"
@@ -200,6 +215,17 @@ export default function MoneyTracker() {
             <p className="text-xs text-muted-foreground">De {initialValue} a {finalValue}</p>
           </CardContent>
         </Card>
+        <Card>
+        <CardHeader>
+          <CardTitle>Suma del Dinero Actual</CardTitle>
+        </CardHeader>
+        <CardContent className="flex items-center justify-start">
+          <div className="text-center">
+            <div className="text-3xl font-bold mb-2">€{currentTotal.toFixed(2)}</div>
+            <p className="text-sm text-muted-foreground">Recuento actual {selectedYear}</p>
+          </div>
+        </CardContent>
+      </Card>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
@@ -208,7 +234,7 @@ export default function MoneyTracker() {
             <CardTitle>Evolución Mensual {selectedYear}</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
+            <div className="h-fit">
               <ChartContainer
                 config={{
                   total: {
@@ -280,7 +306,7 @@ export default function MoneyTracker() {
         </Card>
       </div>
 
-      <Card>
+      {/* <Card>
         <CardHeader>
           <CardTitle>Suma del Dinero Actual</CardTitle>
         </CardHeader>
@@ -290,7 +316,7 @@ export default function MoneyTracker() {
             <p className="text-sm text-muted-foreground">Promedio mensual para {selectedYear}</p>
           </div>
         </CardContent>
-      </Card>
+      </Card> */}
 
       <Card>
         <CardHeader>
