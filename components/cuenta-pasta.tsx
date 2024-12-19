@@ -303,6 +303,16 @@ export default function MoneyTracker() {
       return newAllData;
     });
 
+    // Add the new category to all years
+    const updatedAllData = { ...allData };
+    Object.keys(updatedAllData).forEach((year) => {
+      months.forEach((month) => {
+        updatedAllData[year][month][categoryName] = null;
+      });
+    });
+    setAllData(updatedAllData);
+    localStorage.setItem("moneyTrackerData", JSON.stringify(updatedAllData));
+
     const updatedCategories = [...categories, categoryName];
     setCategories(updatedCategories);
     localStorage.setItem(
