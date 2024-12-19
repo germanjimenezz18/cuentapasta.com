@@ -36,6 +36,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import fileSaver from 'file-saver';
 
 interface MonthlyData {
   cash: number | null;
@@ -342,6 +343,29 @@ export default function MoneyTracker() {
     });
   };
 
+  const exportToCSV = () => {
+    const headers = ["Año", "Categoría", ...months];
+    const rows: (string | number | null)[][] = [];
+
+    Object.entries(allData).forEach(([year, yearlyData]) => {
+      categories.forEach((category) => {
+        const row = [year, category];
+        months.forEach((month) => {
+          row.push(yearlyData[month][category]?.toString() ?? "");
+        });
+        rows.push(row);
+      });
+    });
+
+    const csvContent =
+      [headers, ...rows]
+        .map((e) => e.join(","))
+        .join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    fileSaver.saveAs(blob, "moneyTrackerData.csv");
+  };
+
   const totalProfit = Object.values(data).reduce((sum, month) => {
     return month.profit !== null ? sum + month.profit : sum;
   }, 0);
@@ -559,6 +583,13 @@ export default function MoneyTracker() {
             className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md"
           >
             Añadir Categoría
+          </button>
+          
+          <button
+            onClick={exportToCSV}
+            className="ml-2 px-4 py-2 bg-green-500 text-white rounded-md"
+          >
+            Exportar a CSV
           </button>
         </CardHeader>
         <CardContent>
