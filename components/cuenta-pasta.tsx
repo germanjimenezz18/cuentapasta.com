@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ArrowDown, ArrowUp, Wallet } from "lucide-react";
+import { ArrowDown, ArrowUp, BadgeDollarSignIcon, Wallet } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Table,
@@ -450,15 +450,18 @@ export default function MoneyTracker() {
           </CardContent>
         </Card>
         <Card>
-          <CardHeader>
-            <CardTitle>Suma del Dinero Actual</CardTitle>
+        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">
+              Saldo Actual
+            </CardTitle>
+            <BadgeDollarSignIcon className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent className="flex items-center justify-start">
-            <div className="text-center">
-              <div className="text-3xl font-bold mb-2">
+            <div className="">
+              <div className="text-2xl font-bold">
                 €{currentTotal.toFixed(2)}
               </div>
-              <p className="text-sm text-muted-foreground">
+              <p className="text-xs text-muted-foreground">
                 Recuento actual {selectedYear}
               </p>
             </div>
@@ -609,7 +612,7 @@ export default function MoneyTracker() {
                 {categories.map((category, index) => (
                   <TableRow
                     key={category}
-                    className={`bg-green-50/50 dark:bg-green-950/${
+                    className={`bg-green-950/${
                       20 - index * 5
                     }`}
                   >
