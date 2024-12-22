@@ -17,7 +17,7 @@ export default function Home() {
         />
         <ModeToggle />
       </header>
-      <main className="flex flex-col gap-2  items-center sm:items-start">
+      <main className="flex flex-col gap-2 items-center sm:items-start w-full overflow-x-auto">
         <CuentaPasta />
       </main>
     </div>

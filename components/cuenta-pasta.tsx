@@ -4,6 +4,15 @@ import { useState, useEffect } from "react";
 import { ArrowDown, ArrowUp, BadgeDollarSignIcon, Wallet } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
   Table,
   TableBody,
   TableCell,
@@ -36,7 +45,9 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import fileSaver from 'file-saver';
+import fileSaver from "file-saver";
+import { Button } from "./ui/button";
+import { Label } from "./ui/label";
 
 interface MonthlyData {
   cash: number | null;
@@ -221,6 +232,15 @@ export default function MoneyTracker() {
     return ["cash", "banks", "crypto"];
   });
 
+  // Add a new state to store the new category name
+  const [categoryName, setCategoryName] = useState("");
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleCreateCategory();
+    }
+  };
   console.log({ allData });
   console.log({ data });
   console.log({ selectedYear });
@@ -285,6 +305,14 @@ export default function MoneyTracker() {
   const handleYearChange = (year: string) => {
     setSelectedYear(year);
     setData(allData[year]);
+  };
+
+  const handleCreateCategory = () => {
+    if (categoryName) {
+      handleCreateDataCategory({ categoryName });
+      setCategoryName("");
+      setIsDialogOpen(false);
+    }
   };
 
   // Update handleCreateDataCategory to update categories state and localStorage
@@ -357,10 +385,7 @@ export default function MoneyTracker() {
       });
     });
 
-    const csvContent =
-      [headers, ...rows]
-        .map((e) => e.join(","))
-        .join("\n");
+    const csvContent = [headers, ...rows].map((e) => e.join(",")).join("\n");
 
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     fileSaver.saveAs(blob, "moneyTrackerData.csv");
@@ -398,8 +423,8 @@ export default function MoneyTracker() {
   ];
 
   return (
-    <div className="container mx-auto p-4 space-y-6">
-      <div className="grid gap-4 md:grid-cols-4">
+    <div className="container mx-auto p-4 space-y-6 max-w-full overflow-x-auto">
+      <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Año</CardTitle>
@@ -450,10 +475,8 @@ export default function MoneyTracker() {
           </CardContent>
         </Card>
         <Card>
-        <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Saldo Actual
-            </CardTitle>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Saldo Actual</CardTitle>
             <BadgeDollarSignIcon className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent className="flex items-center justify-start">
@@ -469,7 +492,7 @@ export default function MoneyTracker() {
         </Card>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
         <Card>
           <CardHeader>
             <CardTitle>Evolución Mensual {selectedYear}</CardTitle>
@@ -570,30 +593,51 @@ export default function MoneyTracker() {
       </Card> */}
 
       <Card>
-        <CardHeader>
-          <CardTitle>Cuenta Pasta {selectedYear}</CardTitle>
-          {/*  meter aqui boton para crear nueva*/}
+        <CardHeader className="flex flex-row  ">
+          <CardTitle className="w-full ">Cuenta Pasta {selectedYear}</CardTitle>
 
-          <button
-            onClick={() => {
-              const categoryName = prompt(
-                "Ingrese el nombre de la nueva categoría:"
-              );
-              if (categoryName) {
-                handleCreateDataCategory({ categoryName });
-              }
-            }}
-            className="ml-2 px-4 py-2 bg-blue-500 text-white rounded-md"
-          >
-            Añadir Categoría
-          </button>
-          
-          <button
-            onClick={exportToCSV}
-            className="ml-2 px-4 py-2 bg-green-500 text-white rounded-md"
-          >
-            Exportar a CSV
-          </button>
+          <div className="flex flex-row md:flex-nowrap gap-x-2 w-full justify-end">
+            <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+              <DialogTrigger asChild onClick={() => setIsDialogOpen(true)}>
+                <Button variant="outline">Añadir Categoría</Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Añadir Categoría</DialogTitle>
+                  <DialogDescription>
+                    Crea nuevas categorias para tu cuenta de pasta, estas se
+                    añadiran a todos los años.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className="grid gap-4 py-4">
+                  <div className="grid grid-cols-4 items-center gap-4">
+                    <Label htmlFor="name" className="text-right">
+                      Nombre
+                    </Label>
+                    <Input
+                      id="name"
+                      value={categoryName}
+                      onKeyDown={handleKeyDown}
+                      className="col-span-3"
+                      onChange={(e) => setCategoryName(e.target.value)}
+                    />
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button type="button" onClick={handleCreateCategory}>
+                    Guardar
+                  </Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+
+            <Button variant={"outline"}
+              onClick={exportToCSV}
+              className="ml-2 px-4 py-2 bg-green-900 hover:bg-green-800 focus:hover:bg-green-700 text-white rounded-md"
+            >
+              Exportar a CSV
+            </Button>
+          </div>
         </CardHeader>
         <CardContent>
           <div className="rounded-md border overflow-x-auto">
@@ -612,9 +656,7 @@ export default function MoneyTracker() {
                 {categories.map((category, index) => (
                   <TableRow
                     key={category}
-                    className={`bg-green-950/${
-                      20 - index * 5
-                    }`}
+                    className={`bg-green-950/${20 - index * 5}`}
                   >
                     <TableCell className="font-medium capitalize flex items-center">
                       {category}
