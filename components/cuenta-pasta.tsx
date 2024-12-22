@@ -236,7 +236,7 @@ export default function MoneyTracker() {
   const [categoryName, setCategoryName] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleKeyDown = (e) => {
+  const handleKeyDown = (e : React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       handleCreateCategory();
     }
@@ -631,7 +631,8 @@ export default function MoneyTracker() {
               </DialogContent>
             </Dialog>
 
-            <Button variant={"outline"}
+            <Button
+              variant={"outline"}
               onClick={exportToCSV}
               className="ml-2 px-4 py-2 bg-green-900 hover:bg-green-800 focus:hover:bg-green-700 text-white rounded-md"
             >
