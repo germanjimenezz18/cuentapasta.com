@@ -236,7 +236,7 @@ export default function MoneyTracker() {
   const [categoryName, setCategoryName] = useState("");
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
-  const handleKeyDown = (e : React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       handleCreateCategory();
     }
@@ -592,7 +592,7 @@ export default function MoneyTracker() {
         </CardContent>
       </Card> */}
 
-      <Card>
+      <Card> {/*  */}
         <CardHeader className="flex flex-row  ">
           <CardTitle className="w-full ">Cuenta Pasta {selectedYear}</CardTitle>
 

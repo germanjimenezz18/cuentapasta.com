@@ -1,13 +1,22 @@
-import { signIn } from "@/auth";
+'use client'
+
+import { useTransition } from 'react'
+import { signInWithGoogle } from "@/app/actions/authentication"
+import { Button } from "@/components/ui/button"
+
 export default function SignIn() {
+  const [isPending, startTransition] = useTransition()
+
+  const handleSignIn = () => {
+    startTransition(async () => {
+      await signInWithGoogle()
+    })
+  }
+
   return (
-    <form
-      action={async () => {
-        "use server";
-        await signIn("google");
-      }}
-    >
-      <button type="submit">Sincroniza con Google</button>
-    </form>
-  );
+    <Button onClick={handleSignIn} disabled={isPending}>
+      {isPending ? 'Iniciando sesión...' : 'Iniciar sesión con Google'}
+    </Button>
+  )
 }
+
