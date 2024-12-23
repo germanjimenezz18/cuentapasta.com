@@ -29,7 +29,7 @@ export function AuthToggleClient({ user }: AuthToggleClientProps) {
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className=" ">
+        <Button variant="ghost" size="icon">
           {user.image ? (
             <img
               src={user?.image}
@@ -59,7 +59,9 @@ export function AuthToggleClient({ user }: AuthToggleClientProps) {
           <Link href="/profile">Perfil</Link>
         </DropdownMenuItem> */}
         <DropdownMenuItem asChild>
-          <Link href="/settings"><Settings className="size-4 "/> Configuración</Link>
+          <Link href="/settings">
+            <Settings className="size-4 " /> Configuración
+          </Link>
         </DropdownMenuItem>
         <DropdownMenuItem>
           <SignOut />
