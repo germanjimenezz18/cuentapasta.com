@@ -48,6 +48,7 @@ import {
 import fileSaver from "file-saver";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
+import { TestChart01 } from "./test-chart01";
 
 interface MonthlyData {
   cash: number | null;
@@ -491,8 +492,9 @@ export default function MoneyTracker() {
           </CardContent>
         </Card>
       </div>
+      {/* <TestChart01></TestChart01> */}
 
-      <div className="grid gap-4 grid-cols-1 md:grid-cols-2">
+      <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
         <Card>
           <CardHeader>
             <CardTitle>Evolución Mensual {selectedYear}</CardTitle>
@@ -592,7 +594,9 @@ export default function MoneyTracker() {
         </CardContent>
       </Card> */}
 
-      <Card> {/*  */}
+      <Card>
+        {" "}
+        {/*  */}
         <CardHeader className="flex flex-row  ">
           <CardTitle className="w-full ">Cuenta Pasta {selectedYear}</CardTitle>
 
@@ -689,12 +693,23 @@ export default function MoneyTracker() {
                     ))}
                   </TableRow>
                 ))}
+                {/* <TableRow className="">
+                  <TableCell>
+                    <span className="text-white dark:text-background">
+                      jeje
+                    </span>
+                  </TableCell>
+                  {months.map((month) => (
+                    <TableCell key={month}></TableCell>
+                  ))}
+                </TableRow> */}
+
                 <TableRow className="bg-orange-50 dark:bg-orange-950/20 font-medium">
                   <TableCell>TOTAL</TableCell>
                   {months.map((month) => (
-                    <TableCell key={month} className="text-right">
+                    <TableCell key={month} className="text-right  pr-6">
                       {data[month].total !== null
-                        ? data[month].total.toFixed(2)
+                        ? data[month].total.toFixed(0)
                         : "-"}
                     </TableCell>
                   ))}
@@ -704,7 +719,7 @@ export default function MoneyTracker() {
                   {months.map((month) => (
                     <TableCell
                       key={month}
-                      className={`text-right ${
+                      className={`text-right  pr-6 ${
                         data[month].profit !== null && data[month].profit > 0
                           ? "text-green-600 dark:text-green-400"
                           : data[month].profit !== null &&
@@ -714,7 +729,7 @@ export default function MoneyTracker() {
                       }`}
                     >
                       {data[month].profit !== null
-                        ? data[month].profit.toFixed(2)
+                        ? data[month].profit.toFixed(0)
                         : "-"}
                     </TableCell>
                   ))}
