@@ -6,11 +6,11 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-#__next {
-  @apply h-full;
-  overflow-y: scroll;
-}
 
+html body[data-scroll-locked] {
+  overflow: visible !important;
+  margin-right: 0 !important;
+} 
 @layer base {
   :root {
     --background: 0 0% 100%;
