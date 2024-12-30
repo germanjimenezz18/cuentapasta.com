@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { ArrowDown, ArrowUp, BadgeDollarSignIcon, Wallet } from "lucide-react";
+import { ArrowDown, ArrowUp, BadgeDollarSignIcon, } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
@@ -48,7 +48,6 @@ import {
 import fileSaver from "file-saver";
 import { Button } from "./ui/button";
 import { Label } from "./ui/label";
-import { TestChart01 } from "./test-chart01";
 
 interface MonthlyData {
   cash: number | null;
@@ -392,9 +391,9 @@ export default function MoneyTracker() {
     fileSaver.saveAs(blob, "moneyTrackerData.csv");
   };
 
-  const totalProfit = Object.values(data).reduce((sum, month) => {
-    return month.profit !== null ? sum + month.profit : sum;
-  }, 0);
+  // const totalProfit = Object.values(data).reduce((sum, month) => {
+  //   return month.profit !== null ? sum + month.profit : sum;
+  // }, 0);
 
   const initialValue = data["ENERO"].total ?? 0;
   const finalValue = data["DICIEMBRE"].total ?? initialValue;
