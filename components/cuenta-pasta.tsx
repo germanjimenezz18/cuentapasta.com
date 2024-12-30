@@ -426,7 +426,8 @@ export default function MoneyTracker() {
   return (
     <div className="container mx-auto p-4 space-y-6 max-w-full overflow-x-auto">
       <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
-        <Card>
+        {/* Selector de año */}
+        {/* <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Año</CardTitle>
           </CardHeader>
@@ -444,57 +445,24 @@ export default function MoneyTracker() {
               </SelectContent>
             </Select>
           </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">
-              Beneficio Total
-            </CardTitle>
-            <Wallet className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">€{totalProfit.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground">
-              Para el año {selectedYear}
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Retorno Anual</CardTitle>
-            {yearlyReturn > 0 ? (
-              <ArrowUp className="h-4 w-4 text-green-500" />
-            ) : (
-              <ArrowDown className="h-4 w-4 text-red-500" />
-            )}
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{yearlyReturn.toFixed(2)}%</div>
-            <p className="text-xs text-muted-foreground">
-              De {initialValue} a {finalValue}
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Saldo Actual</CardTitle>
-            <BadgeDollarSignIcon className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent className="flex items-center justify-start">
-            <div className="">
-              <div className="text-2xl font-bold">
-                €{currentTotal.toFixed(2)}
-              </div>
-              <p className="text-xs text-muted-foreground">
-                Recuento actual {selectedYear}
-              </p>
-            </div>
-          </CardContent>
-        </Card>
+        </Card> */}
+
+        <Select value={selectedYear} onValueChange={handleYearChange}>
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Selecciona un año" />
+          </SelectTrigger>
+          <SelectContent>
+            {Object.keys(allData).map((year) => (
+              <SelectItem key={year} value={year}>
+                {year}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
-      {/* <TestChart01></TestChart01> */}
 
       <div className="grid gap-4 grid-cols-1 md:grid-cols-3">
+        {/* Evolución Mensual */}
         <Card>
           <CardHeader>
             <CardTitle>Evolución Mensual {selectedYear}</CardTitle>
@@ -529,6 +497,7 @@ export default function MoneyTracker() {
           </CardContent>
         </Card>
 
+        {/*Distribución por Categorías  */}
         <Card>
           <CardHeader>
             <CardTitle>
@@ -536,7 +505,7 @@ export default function MoneyTracker() {
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="h-[300px]">
+            <div className="h-fit">
               <ChartContainer
                 config={{
                   cash: {
@@ -580,23 +549,72 @@ export default function MoneyTracker() {
             </div>
           </CardContent>
         </Card>
+
+        <div className="grid gap-4 grid-cols-1">
+          {/* Beneficio Total */}
+          {/* <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Beneficio Total
+              </CardTitle>
+              <Wallet className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                €{totalProfit.toFixed(2)}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                Para el año {selectedYear}
+              </p>
+            </CardContent>
+          </Card> */}
+
+          {/* Saldo Actual */}
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Saldo Actual
+              </CardTitle>
+              <BadgeDollarSignIcon className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent className="flex items-center justify-start">
+              <div className="">
+                <div className="text-2xl font-bold">
+                  €{currentTotal.toFixed(2)}
+                </div>
+                <p className="text-xs text-muted-foreground">
+                  Recuento actual {selectedYear}
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Retorno Anual */}
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Retorno Anual
+              </CardTitle>
+              {yearlyReturn > 0 ? (
+                <ArrowUp className="h-4 w-4 text-green-500" />
+              ) : (
+                <ArrowDown className="h-4 w-4 text-red-500" />
+              )}
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">
+                {yearlyReturn.toFixed(2)}%
+              </div>
+              <p className="text-xs text-muted-foreground">
+                De {initialValue} a {finalValue}
+              </p>
+            </CardContent>
+          </Card>
+        </div>
       </div>
 
-      {/* <Card>
-        <CardHeader>
-          <CardTitle>Suma del Dinero Actual</CardTitle>
-        </CardHeader>
-        <CardContent className="flex items-center justify-center">
-          <div className="text-center">
-            <div className="text-5xl font-bold mb-2">€{currentTotal.toFixed(2)}</div>
-            <p className="text-sm text-muted-foreground">Promedio mensual para {selectedYear}</p>
-          </div>
-        </CardContent>
-      </Card> */}
-
+      {/* Cuenta Pasta */}
       <Card>
-        {" "}
-        {/*  */}
         <CardHeader className="flex flex-row  ">
           <CardTitle className="w-full ">Cuenta Pasta {selectedYear}</CardTitle>
 
